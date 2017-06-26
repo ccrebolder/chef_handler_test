@@ -7,14 +7,25 @@
 require 'spec_helper'
 
 describe 'chef_handler_test::default' do
-  context 'When all attributes are default, on an unspecified platform' do
-    let(:chef_run) do
+  context 'When using ChefSpec::ServerRunner' do
+    let(:server_run) do
       runner = ChefSpec::ServerRunner.new
       runner.converge(described_recipe)
     end
 
     it 'converges successfully' do
-      expect { chef_run }.to_not raise_error
+      expect { server_run }.to_not raise_error
+    end
+  end
+
+  context 'When using ChefSpec::SoloRunner' do
+    let(:solo_run) do
+      runner = ChefSpec::SoloRunner.new
+      runner.converge(described_recipe)
+    end
+
+    it 'converges successfully' do
+      expect { solo_run }.to_not raise_error
     end
   end
 end
